@@ -1,3 +1,12 @@
 <resources>
+    <string name="login_description">Login icon</string>
     <string name="app_name">RecipeApp</string>
+    <string name="recipes">Recipes</string>
+    <string name="recipe_image_description">Recipe image</string>
+    <string name="preparation_time">Preparation: %1$d min</string>
+    <string name="favorite_icon">Favorite icon</string>
+    <string name="check_icon">Check icon</string>
+    <string name="favorites">Favorites</string>
+    <string name="time">Time</string>
+    <string name="no_recipes_found">There are no recipes yet</string>
 </resources>
