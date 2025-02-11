@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.jdsm.myapplication.presentation.login.LoginRoute
 import com.jdsm.myapplication.presentation.mainFlow.recipe.list.RecipeListRoute
 import com.jdsm.myapplication.ui.theme.RecipeAppTheme
 
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
             RecipeAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Surface(modifier = Modifier.padding(innerPadding)) {
-                        RecipeListRoute(onRecipeClick = {})
+                        LoginRoute(onLogIn = { /*TODO*/ })
                     }
                 }
             }

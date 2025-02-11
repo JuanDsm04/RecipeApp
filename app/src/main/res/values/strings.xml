@@ -1,5 +1,5 @@
 <resources>
-    <string name="login_description">Login icon</string>
+    <string name="login_description">Login image</string>
     <string name="app_name">RecipeApp</string>
     <string name="recipes">Recipes</string>
     <string name="recipe_image_description">Recipe image</string>
@@ -15,4 +15,10 @@
     <string name="person_icon">Person icon</string>
     <string name="account">Koalit</string>
     <string name="log_out">Log out</string>
+    <string name="welcome_app">Welcome to your recipe app</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="password_icon">Password icon</string>
+    <string name="login_error">The email or password is incorrect</string>
+    <string name="login_text_button">Login</string>
 </resources>
