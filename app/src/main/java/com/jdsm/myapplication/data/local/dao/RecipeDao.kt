@@ -3,6 +3,7 @@ package com.jdsm.myapplication.data.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.jdsm.myapplication.data.local.entity.RecipeEntity
 
 @Dao
@@ -18,4 +19,7 @@ interface RecipeDao {
 
     @Query("SELECT * FROM RecipeEntity WHERE id = :id")
     suspend fun getRecipeById(id: Int): RecipeEntity
+
+    @Update
+    suspend fun update(recipe: RecipeEntity)
 }

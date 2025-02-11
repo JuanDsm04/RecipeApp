@@ -9,4 +9,7 @@
     <string name="favorites">Favorites</string>
     <string name="time">Time</string>
     <string name="no_recipes_found">There are no recipes yet</string>
+    <string name="recipe_detail">Recipe Detail</string>
+    <string name="add_favorites">Add to Favorites</string>
+    <string name="remove_favorites">Remove to Favorites</string>
 </resources>

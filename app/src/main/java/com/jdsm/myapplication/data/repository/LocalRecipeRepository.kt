@@ -35,4 +35,8 @@ class LocalRecipeRepository (
     suspend fun getRecipeById(id: Int): Recipe {
         return recipeDao.getRecipeById(id).mapToModel()
     }
+
+    suspend fun updateRecipe(recipe: Recipe) {
+        recipeDao.update(recipe.mapToEntity())
+    }
 }
