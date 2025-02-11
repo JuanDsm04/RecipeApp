@@ -1,4 +1,4 @@
-package com.jdsm.myapplication.presentation.recipe.list
+package com.jdsm.myapplication.presentation.mainFlow.recipe.list
 
 import com.jdsm.myapplication.data.model.Recipe
 

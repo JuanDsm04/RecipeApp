@@ -1,4 +1,4 @@
-package com.jdsm.myapplication.presentation.recipe.profile
+package com.jdsm.myapplication.presentation.mainFlow.recipe.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

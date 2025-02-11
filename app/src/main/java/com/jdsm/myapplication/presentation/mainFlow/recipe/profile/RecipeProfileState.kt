@@ -1,4 +1,4 @@
-package com.jdsm.myapplication.presentation.recipe.profile
+package com.jdsm.myapplication.presentation.mainFlow.recipe.profile
 
 import com.jdsm.myapplication.data.model.Recipe
 

@@ -12,4 +12,7 @@
     <string name="recipe_detail">Recipe Detail</string>
     <string name="add_favorites">Add to Favorites</string>
     <string name="remove_favorites">Remove to Favorites</string>
+    <string name="person_icon">Person icon</string>
+    <string name="account">Koalit</string>
+    <string name="log_out">Log out</string>
 </resources>

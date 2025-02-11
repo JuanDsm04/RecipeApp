@@ -1,4 +1,4 @@
-package com.jdsm.myapplication.presentation.recipe.list
+package com.jdsm.myapplication.presentation.mainFlow.recipe.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
