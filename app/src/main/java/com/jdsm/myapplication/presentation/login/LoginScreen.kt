@@ -151,6 +151,7 @@ fun LoginScreen(
                     isError = state.hasError,
                     supportingText = {
                         if (state.hasError) Text(text = stringResource(id = R.string.login_error))
+                        if (state.hasEmpty) Text(text = stringResource(id = R.string.login_empty))
                     }
                 )
 
@@ -184,10 +185,31 @@ private fun PreviewLoginScreen() {
         LoginScreen(
             onLogIn = {},
             state = LoginState(
+                email = "",
                 password = "",
                 hasError = false,
                 successfulLogin = true,
+                isPasswordVisible = true
+            ),
+            onEmailChange = {},
+            onPasswordChange = {},
+            onIsPasswordVisibleChange = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewLoginScreenEmpty() {
+    RecipeAppTheme {
+        LoginScreen(
+            onLogIn = {},
+            state = LoginState(
                 email = "",
+                password = "",
+                hasError = false,
+                hasEmpty = true,
+                successfulLogin = false,
                 isPasswordVisible = true
             ),
             onEmailChange = {},
@@ -204,10 +226,11 @@ private fun PreviewLoginScreenError() {
         LoginScreen(
             onLogIn = {},
             state = LoginState(
-                password = "",
+                email = "example",
+                password = "example",
                 hasError = true,
+                hasEmpty = false,
                 successfulLogin = false,
-                email = "",
                 isPasswordVisible = true
             ),
             onEmailChange = {},

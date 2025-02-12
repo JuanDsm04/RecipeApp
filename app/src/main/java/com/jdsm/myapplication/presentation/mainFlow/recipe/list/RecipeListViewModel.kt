@@ -29,6 +29,10 @@ class RecipeListViewModel(
         }
     }
 
+    fun refreshRecipes() {
+        getRecipes()
+    }
+
     private fun getRecipes() {
         getDataJob?.cancel()
         getDataJob = viewModelScope.launch {

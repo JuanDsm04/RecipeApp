@@ -8,11 +8,13 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,11 +39,16 @@ fun RecipeListRoute(
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.refreshRecipes()
+    }
+
     RecipeListScreen(
         state = state,
         onRecipeClick = onRecipeClick,
         onToggleFavoritesFilter = { viewModel.toggleFavoriteFilter()},
-        onToggleSortByTime = { viewModel.toggleSortByTime() }
+        onToggleSortByTime = { viewModel.toggleSortByTime() },
+        onAddRecipeClick = {}
     )
 }
 
@@ -51,64 +58,88 @@ private fun RecipeListScreen(
     state: RecipeListState,
     onRecipeClick: (Int) -> Unit,
     onToggleFavoritesFilter: () -> Unit,
-    onToggleSortByTime: () -> Unit
-){
-    Column (
-        modifier = Modifier
-            .fillMaxSize()
-    ){
-        TopAppBar(
-            title = {
-                Text(stringResource(id = R.string.recipes))
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.tertiary,
-                titleContentColor = MaterialTheme.colorScheme.onTertiary
-            )
-        )
+    onToggleSortByTime: () -> Unit,
+    onAddRecipeClick: () -> Unit
+) {
+    Scaffold(
 
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            LazyRow (
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ){
-                item {
-                    CustomFilterChip(
-                        isSelected = state.filterByFavorites,
-                        label = stringResource(id = R.string.favorites),
-                        onClick = onToggleFavoritesFilter
-                    )
-                }
-                item {
-                    CustomFilterChip(
-                        isSelected = state.sortByTime,
-                        label = stringResource(id = R.string.time),
-                        onClick = onToggleSortByTime
-                    )
-                }
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(stringResource(id = R.string.recipes))
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    titleContentColor = MaterialTheme.colorScheme.onTertiary
+                )
+            )
+        },
+
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onAddRecipeClick() },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(id = R.string.add_icon),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
 
-        if (state.recipes.isEmpty()){
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+    ) { paddingValues ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(text = stringResource(id = R.string.no_recipes_found), fontSize = 20.sp)
+
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    item {
+                        CustomFilterChip(
+                            isSelected = state.filterByFavorites,
+                            label = stringResource(id = R.string.favorites),
+                            onClick = onToggleFavoritesFilter
+                        )
+                    }
+                    item {
+                        CustomFilterChip(
+                            isSelected = state.sortByTime,
+                            label = stringResource(id = R.string.time),
+                            onClick = onToggleSortByTime
+                        )
+                    }
+                }
+
             }
-        } else {
-            LazyColumn (
-                modifier = Modifier.padding(horizontal = 20.dp)
-            ){
-                items(state.recipes) { item ->
-                    RecipeItem(
-                        recipe = item,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onRecipeClick(item.id) }
+
+            if (state.recipes.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.no_recipes_found),
+                        fontSize = 20.sp
                     )
+                }
+
+            } else {
+                LazyColumn(modifier = Modifier.padding(horizontal = 20.dp)) {
+                    items(state.recipes) { item ->
+                        RecipeItem(
+                            recipe = item,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onRecipeClick(item.id) }
+                        )
+                    }
                 }
             }
         }
@@ -212,7 +243,8 @@ private fun PreviewRecipeListScreen() {
                 state = RecipeListState(recipes = recipesDb.getAllRecipes()),
                 onRecipeClick = {},
                 onToggleFavoritesFilter = {},
-                onToggleSortByTime = {}
+                onToggleSortByTime = {},
+                onAddRecipeClick = {}
             )
         }
     }
@@ -227,7 +259,8 @@ private fun PreviewEmptyRecipeList() {
                 state = RecipeListState(recipes = emptyList()),
                 onRecipeClick = {},
                 onToggleFavoritesFilter = {},
-                onToggleSortByTime = {}
+                onToggleSortByTime = {},
+                onAddRecipeClick = {}
             )
         }
     }
@@ -249,7 +282,8 @@ private fun PreviewFavoritesFilter() {
                 ),
                 onRecipeClick = {},
                 onToggleFavoritesFilter = {},
-                onToggleSortByTime = {}
+                onToggleSortByTime = {},
+                onAddRecipeClick = {}
             )
         }
     }
@@ -271,7 +305,8 @@ private fun PreviewTimeFilter() {
                 ),
                 onRecipeClick = {},
                 onToggleFavoritesFilter = {},
-                onToggleSortByTime = {}
+                onToggleSortByTime = {},
+                onAddRecipeClick = {}
             )
         }
     }

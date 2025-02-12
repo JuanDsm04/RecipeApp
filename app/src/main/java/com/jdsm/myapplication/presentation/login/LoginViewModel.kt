@@ -26,9 +26,13 @@ class LoginViewModel : ViewModel() {
     private fun onLogin() {
         viewModelScope.launch {
             _state.update { state ->
+                val isEmpty = state.email.isEmpty() || state.password.isEmpty()
+                val isValid = state.email == "info@koalit.dev" && state.password == "koalit123"
+
                 state.copy(
-                    successfulLogin = state.email.isNotEmpty() && state.password.isNotEmpty(),
-                    hasError = state.email.isEmpty() || state.password.isEmpty()
+                    successfulLogin = isValid && !isEmpty,
+                    hasEmpty = isEmpty,
+                    hasError = !isValid && !isEmpty
                 )
             }
         }

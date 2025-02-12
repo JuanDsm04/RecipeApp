@@ -2,6 +2,7 @@
     <string name="login_description">Login image</string>
     <string name="app_name">RecipeApp</string>
     <string name="recipes">Recipes</string>
+    <string name="profile">Profile</string>
     <string name="recipe_image_description">Recipe image</string>
     <string name="preparation_time">Preparation: %1$d min</string>
     <string name="favorite_icon">Favorite icon</string>
@@ -20,5 +21,7 @@
     <string name="enter_password">Enter your password</string>
     <string name="password_icon">Password icon</string>
     <string name="login_error">The email or password is incorrect</string>
+    <string name="login_empty">You must fill out the requested fields</string>
     <string name="login_text_button">Login</string>
+    <string name="add_icon">Add icon</string>
 </resources>
