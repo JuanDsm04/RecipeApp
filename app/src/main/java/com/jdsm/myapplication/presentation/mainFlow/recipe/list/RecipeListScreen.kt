@@ -30,11 +30,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jdsm.myapplication.R
 import com.jdsm.myapplication.data.model.Recipe
 import com.jdsm.myapplication.data.source.RecipeDb
+import com.jdsm.myapplication.presentation.common.CustomTopAppBar
 import com.jdsm.myapplication.ui.theme.RecipeAppTheme
 
 @Composable
 fun RecipeListRoute(
     onRecipeClick: (Int) -> Unit,
+    onAddRecipeClick: () -> Unit,
     viewModel: RecipeListViewModel = viewModel(factory = RecipeListViewModel.Factory)
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -46,13 +48,12 @@ fun RecipeListRoute(
     RecipeListScreen(
         state = state,
         onRecipeClick = onRecipeClick,
+        onAddRecipeClick = onAddRecipeClick,
         onToggleFavoritesFilter = { viewModel.toggleFavoriteFilter()},
-        onToggleSortByTime = { viewModel.toggleSortByTime() },
-        onAddRecipeClick = {}
+        onToggleSortByTime = { viewModel.toggleSortByTime() }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RecipeListScreen(
     state: RecipeListState,
@@ -64,14 +65,8 @@ private fun RecipeListScreen(
     Scaffold(
 
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringResource(id = R.string.recipes))
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.tertiary,
-                    titleContentColor = MaterialTheme.colorScheme.onTertiary
-                )
+            CustomTopAppBar(
+                title = stringResource(id = R.string.recipes)
             )
         },
 
@@ -191,7 +186,7 @@ private fun RecipeItem(
     ) {
         Column {
             Image(
-                painter = painterResource(id = R.drawable.tacos),
+                painter = painterResource(id = R.drawable.food),
                 contentDescription = stringResource(id = R.string.recipe_image_description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

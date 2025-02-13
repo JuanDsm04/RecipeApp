@@ -1,13 +1,7 @@
 package com.jdsm.myapplication.presentation.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.jdsm.myapplication.R
@@ -36,7 +30,6 @@ fun getNavigationItems(): List<NavItem> {
         )
     )
 }
-
 
 val topLevelDestinations = listOf(
     RecipeListDestination::class,

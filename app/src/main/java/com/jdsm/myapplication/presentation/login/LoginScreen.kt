@@ -1,6 +1,5 @@
 package com.jdsm.myapplication.presentation.login
 
-import LoginViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,13 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,11 +37,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jdsm.myapplication.ui.theme.RecipeAppTheme
 import com.jdsm.myapplication.R
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jdsm.myapplication.presentation.common.CustomOutlinedTextField
+import com.jdsm.myapplication.presentation.common.CustomTextButton
 
 @Composable
 fun LoginRoute(
     onLogIn: () -> Unit,
-    viewModel: LoginViewModel= viewModel(factory = LoginViewModel.Factory)
+    viewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -72,7 +71,7 @@ fun LoginRoute(
 }
 
 @Composable 
-fun LoginScreen(
+private fun LoginScreen(
     state: LoginState,
     onLogIn: () -> Unit,
     onEmailChange: (String) -> Unit,
@@ -109,18 +108,12 @@ fun LoginScreen(
                         textAlign = TextAlign.Center
                     )
                 )
+
                 Spacer(modifier = Modifier.height(20.dp))
-                OutlinedTextField(
+                CustomOutlinedTextField(
                     value = state.email,
                     onValueChange = onEmailChange,
-                    label = {
-                        Text(text = stringResource(id = R.string.enter_email))
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    singleLine = true,
+                    label = stringResource(id = R.string.enter_email),
                     isError = state.hasError
                 )
 
@@ -151,27 +144,14 @@ fun LoginScreen(
                     isError = state.hasError,
                     supportingText = {
                         if (state.hasError) Text(text = stringResource(id = R.string.login_error))
-                        if (state.hasEmpty) Text(text = stringResource(id = R.string.login_empty))
+                        if (state.hasEmpty) Text(text = stringResource(id = R.string.empty_fields))
                     }
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
-                TextButton(
-                    onClick = { onLogIn() },
-                    modifier = Modifier
-                        .height(50.dp)
-                        .fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.tertiary
-                    )
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.login_text_button),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            color = MaterialTheme.colorScheme.onTertiary
-                        )
-                    )
-                }
+                CustomTextButton(
+                    text = stringResource(id = R.string.login_text_button),
+                    onClick = { onLogIn() }
+                )
             }
         }
     }
@@ -231,7 +211,7 @@ private fun PreviewLoginScreenError() {
                 hasError = true,
                 hasEmpty = false,
                 successfulLogin = false,
-                isPasswordVisible = true
+                isPasswordVisible = false
             ),
             onEmailChange = {},
             onPasswordChange = {},

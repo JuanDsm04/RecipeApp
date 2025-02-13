@@ -6,17 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jdsm.myapplication.ui.theme.RecipeAppTheme
 import com.jdsm.myapplication.R
+import com.jdsm.myapplication.presentation.common.CustomTextButton
 
 @Composable
 fun ProfileRoute(
@@ -71,23 +69,10 @@ fun ProfileScreen(
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedButton(
-            onClick = onLogOutClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = MaterialTheme.colorScheme.tertiary
-            )
-        ) {
-            Text(
-                text = stringResource(id = R.string.log_out),
-                style = MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            )
-        }
+        CustomTextButton(
+            text = stringResource(id = R.string.log_out),
+            onClick = onLogOutClick
+        )
     }
 }
 

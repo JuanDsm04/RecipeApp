@@ -21,7 +21,15 @@
     <string name="enter_password">Enter your password</string>
     <string name="password_icon">Password icon</string>
     <string name="login_error">The email or password is incorrect</string>
-    <string name="login_empty">You must fill out the requested fields</string>
+    <string name="empty_fields">You must fill out the requested fields</string>
     <string name="login_text_button">Login</string>
     <string name="add_icon">Add icon</string>
+    <string name="new_recipe">New Recipe</string>
+    <string name="enter_title">Title</string>
+    <string name="enter_description">Description</string>
+    <string name="enter_preparation_time">Time (minutes)</string>
+    <string name="mark_as_favorite">Mark as favorite</string>
+    <string name="add_recipe">Add recipe</string>
+    <string name="incorrect_format">The format entered is incorrect</string>
+    <string name="recipe_added">Recipe added</string>
 </resources>

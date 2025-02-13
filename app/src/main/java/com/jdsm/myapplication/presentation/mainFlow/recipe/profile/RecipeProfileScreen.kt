@@ -3,7 +3,6 @@ package com.jdsm.myapplication.presentation.mainFlow.recipe.profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,11 +20,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
@@ -33,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jdsm.myapplication.presentation.common.CustomTextButton
+import com.jdsm.myapplication.presentation.common.CustomTopAppBar
 
 @Composable
 fun RecipeProfileRoute(
@@ -48,7 +47,6 @@ fun RecipeProfileRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RecipeProfileScreen(
     state: RecipeProfileState,
@@ -60,26 +58,12 @@ private fun RecipeProfileScreen(
         modifier = Modifier
             .fillMaxSize()
     ){
-        TopAppBar(
-            title = {
-                Text(stringResource(id = R.string.recipe_detail))
-            },
-            navigationIcon = {
-                IconButton(onClick = { onNavigationBack() }) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onTertiary
-                        )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.tertiary,
-                titleContentColor = MaterialTheme.colorScheme.onTertiary
-            )
+        CustomTopAppBar(
+            title = stringResource(id = R.string.recipe_detail),
+            onNavigationBack = { onNavigationBack() }
         )
         Image(
-            painter = painterResource(id = R.drawable.tacos),
+            painter = painterResource(id = R.drawable.food),
             contentDescription = stringResource(id = R.string.recipe_image_description),
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -112,29 +96,17 @@ private fun RecipeProfileScreen(
                 )
             }
         }
-        TextButton(
+        CustomTextButton(
+            text = if (recipe != null && recipe.favorite)
+                stringResource(id = R.string.remove_favorites)
+            else
+                stringResource(id = R.string.add_favorites),
             onClick = { onFavorites() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.tertiary
-            )
-        ) {
-            if (recipe != null) {
-                Text(
-                    text = if (recipe.favorite)
-                        stringResource(id = R.string.remove_favorites)
-                    else
-                        stringResource(id = R.string.add_favorites),
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                )
-            }
-
-        }
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            textColor = MaterialTheme.colorScheme.onPrimary,
+            padding = 16.dp,
+            height = 50.dp
+        )
     }
 }
 
@@ -167,4 +139,3 @@ private fun PreviewProfileScreenRemoveFavorites() {
         }
     }
 }
-

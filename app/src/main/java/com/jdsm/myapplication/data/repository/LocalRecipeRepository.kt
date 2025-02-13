@@ -5,7 +5,6 @@ import com.jdsm.myapplication.data.local.entity.mapToEntity
 import com.jdsm.myapplication.data.local.entity.mapToModel
 import com.jdsm.myapplication.data.model.Recipe
 import com.jdsm.myapplication.data.source.RecipeDb
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlin.coroutines.coroutineContext
 
@@ -34,6 +33,10 @@ class LocalRecipeRepository (
 
     suspend fun getRecipeById(id: Int): Recipe {
         return recipeDao.getRecipeById(id).mapToModel()
+    }
+
+    suspend fun insertRecipe(recipe: Recipe) {
+        recipeDao.insert(recipe.mapToEntity())
     }
 
     suspend fun updateRecipe(recipe: Recipe) {

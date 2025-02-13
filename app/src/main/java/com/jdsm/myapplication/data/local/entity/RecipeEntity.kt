@@ -6,7 +6,7 @@ import com.jdsm.myapplication.data.model.Recipe
 
 @Entity
 data class RecipeEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val description: String,
     val preparationTime: Int,

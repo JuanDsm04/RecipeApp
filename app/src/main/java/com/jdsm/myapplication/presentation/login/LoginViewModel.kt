@@ -1,10 +1,10 @@
+package com.jdsm.myapplication.presentation.login
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.jdsm.myapplication.presentation.login.LoginEvent
-import com.jdsm.myapplication.presentation.login.LoginState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -26,8 +26,8 @@ class LoginViewModel : ViewModel() {
     private fun onLogin() {
         viewModelScope.launch {
             _state.update { state ->
-                val isEmpty = state.email.isEmpty() || state.password.isEmpty()
-                val isValid = state.email == "info@koalit.dev" && state.password == "koalit123"
+                val isEmpty = state.email.trim().isEmpty() || state.password.trim().isEmpty()
+                val isValid = state.email.trim() == "info@koalit.dev" && state.password.trim() == "koalit123"
 
                 state.copy(
                     successfulLogin = isValid && !isEmpty,
