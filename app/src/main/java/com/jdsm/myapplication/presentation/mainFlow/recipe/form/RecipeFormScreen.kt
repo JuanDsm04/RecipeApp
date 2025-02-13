@@ -1,19 +1,26 @@
 package com.jdsm.myapplication.presentation.mainFlow.recipe.form
 
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jdsm.myapplication.R
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import com.jdsm.myapplication.data.local.saveImageToInternalStorage
 import com.jdsm.myapplication.presentation.common.CustomOutlinedTextField
 import com.jdsm.myapplication.presentation.common.CustomTextButton
 import com.jdsm.myapplication.presentation.common.CustomTopAppBar
@@ -58,6 +67,9 @@ fun RecipeFormRoute(
         onFavoriteChange = {
             viewModel.onEvent(RecipeFormEvent.FavoriteChange(it))
         },
+        onImageSelected = {
+            viewModel.onEvent(RecipeFormEvent.ImageSelected(it))
+        },
         onAddRecipe = {
             viewModel.onEvent(RecipeFormEvent.AddRecipe)
         },
@@ -72,9 +84,21 @@ private fun RecipeFormScreen(
     onDescriptionChange: (String) -> Unit,
     onPreparationTimeChange: (String) -> Unit,
     onFavoriteChange: (Boolean) -> Unit,
+    onImageSelected: (String) -> Unit,
     onAddRecipe: () -> Unit,
     onNavigationBack: () -> Unit
 ){
+
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ){ uri ->
+        uri?.let {
+            val imagePath = saveImageToInternalStorage(context, it)
+            onImageSelected(imagePath)
+        }
+    }
+
     Column (
         modifier = Modifier.fillMaxSize()
     ) {
@@ -100,7 +124,7 @@ private fun RecipeFormScreen(
                     label = stringResource(id = R.string.enter_description),
                     isError = state.hasError,
                     isSingleLine = false,
-                    maxLines = 4
+                    maxLines = 3
                 )
 
                 CustomOutlinedTextField(
@@ -124,6 +148,23 @@ private fun RecipeFormScreen(
                         onCheckedChange = onFavoriteChange
                     )
                     Text(text = stringResource(id = R.string.mark_as_favorite))
+                }
+
+                CustomTextButton(
+                    text = stringResource(id = R.string.select_img),
+                    onClick = { launcher.launch("image/*") },
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    textColor = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+
+                state.imagePath?.let { imagePath ->
+                    Image(
+                        painter = rememberAsyncImagePainter(imagePath),
+                        contentDescription = stringResource(id = R.string.recipe_img),
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
                 }
 
                 CustomTextButton(
@@ -153,7 +194,8 @@ private fun PreviewRecipeFormScreen() {
             onPreparationTimeChange = {},
             onFavoriteChange = {},
             onAddRecipe = {},
-            onNavigationBack = {}
+            onNavigationBack = {},
+            onImageSelected = {}
         )
     }
 }
@@ -176,7 +218,8 @@ private fun PreviewRecipeFormEmptyScreen() {
             onPreparationTimeChange = {},
             onFavoriteChange = {},
             onAddRecipe = {},
-            onNavigationBack = {}
+            onNavigationBack = {},
+            onImageSelected = {}
         )
     }
 }
@@ -200,7 +243,8 @@ private fun PreviewRecipeFormErrorScreen() {
             onPreparationTimeChange = {},
             onFavoriteChange = {},
             onAddRecipe = {},
-            onNavigationBack = {}
+            onNavigationBack = {},
+            onImageSelected = {}
         )
     }
 }

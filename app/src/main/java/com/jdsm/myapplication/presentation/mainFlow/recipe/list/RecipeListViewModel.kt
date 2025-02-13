@@ -22,11 +22,7 @@ class RecipeListViewModel(
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            if (recipeRepository.initialSync()) {
-                getRecipes()
-            }
-        }
+        getRecipes()
     }
 
     fun refreshRecipes() {

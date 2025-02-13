@@ -22,7 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -81,19 +81,19 @@ private fun LoginScreen(
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.tertiaryContainer)
     ){
         Image(
-            painter = painterResource(id = R.drawable.login),
+            painter = painterResource(id = R.drawable.food),
             contentDescription = stringResource(id = R.string.login_description),
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth()
                 .size(225.dp)
+                .align(Alignment.CenterHorizontally)
         )
 
         Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
                 .background(MaterialTheme.colorScheme.surface)
                 .fillMaxSize()
                 .padding(30.dp)
@@ -156,7 +156,6 @@ private fun LoginScreen(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

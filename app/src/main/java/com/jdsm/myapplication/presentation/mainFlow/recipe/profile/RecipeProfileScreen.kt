@@ -18,18 +18,12 @@ import com.jdsm.myapplication.ui.theme.RecipeAppTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.jdsm.myapplication.presentation.common.CustomTextButton
 import com.jdsm.myapplication.presentation.common.CustomTopAppBar
 
@@ -62,8 +56,15 @@ private fun RecipeProfileScreen(
             title = stringResource(id = R.string.recipe_detail),
             onNavigationBack = { onNavigationBack() }
         )
+
+        val painter = if (recipe?.imagePath.isNullOrEmpty()) {
+            painterResource(id = R.drawable.food_empty)
+        } else {
+            rememberAsyncImagePainter(model = recipe?.imagePath)
+        }
+
         Image(
-            painter = painterResource(id = R.drawable.food),
+            painter = painter,
             contentDescription = stringResource(id = R.string.recipe_image_description),
             contentScale = ContentScale.Crop,
             modifier = Modifier

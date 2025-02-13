@@ -32,4 +32,6 @@
     <string name="add_recipe">Add recipe</string>
     <string name="incorrect_format">The format entered is incorrect</string>
     <string name="recipe_added">Recipe added</string>
+    <string name="select_img">Select image</string>
+    <string name="recipe_img">Recipe image</string>
 </resources>

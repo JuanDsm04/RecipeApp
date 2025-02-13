@@ -8,5 +8,6 @@ data class RecipeFormState(
     val hasEmpty: Boolean = false,
     val hasError: Boolean = false,
     val hasErrorTime: Boolean = false,
-    val successfulSave: Boolean = false
+    val successfulSave: Boolean = false,
+    val imagePath: String? = null
 )

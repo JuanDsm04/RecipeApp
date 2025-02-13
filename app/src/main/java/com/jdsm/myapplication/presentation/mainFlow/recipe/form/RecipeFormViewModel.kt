@@ -27,6 +27,9 @@ class RecipeFormViewModel (
             is RecipeFormEvent.DescriptionChange -> onDescriptionChange(event.description)
             is RecipeFormEvent.PreparationTimeChange -> onPreparationTimeChange(event.preparationTime)
             is RecipeFormEvent.FavoriteChange -> onFavoriteChange(event.isFavorite)
+            is RecipeFormEvent.ImageSelected -> {
+                _state.value = state.value.copy(imagePath = event.imagePath)
+            }
             RecipeFormEvent.AddRecipe -> onAddRecipe()
         }
     }
@@ -58,6 +61,14 @@ class RecipeFormViewModel (
         _state.update { state ->
             state.copy(
                 isFavorite = isFavorite
+            )
+        }
+    }
+
+    private fun onImageSelected(imagePath: String) {
+        _state.update { state ->
+            state.copy(
+                imagePath = imagePath
             )
         }
     }
@@ -95,7 +106,8 @@ class RecipeFormViewModel (
                     title = currentState.title.trim(),
                     description = currentState.description.trim(),
                     preparationTime = preparationTimeInt,
-                    favorite = currentState.isFavorite
+                    favorite = currentState.isFavorite,
+                    imagePath = currentState.imagePath
                 )
 
                 repository.insertRecipe(recipe)

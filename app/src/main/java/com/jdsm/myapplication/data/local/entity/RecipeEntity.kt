@@ -10,7 +10,8 @@ data class RecipeEntity(
     val title: String,
     val description: String,
     val preparationTime: Int,
-    val favorite: Boolean
+    val favorite: Boolean,
+    val imagePath: String? = null
 )
 
 fun Recipe.mapToEntity(): RecipeEntity {
@@ -19,7 +20,8 @@ fun Recipe.mapToEntity(): RecipeEntity {
         title = title,
         description = description,
         preparationTime = preparationTime,
-        favorite = favorite
+        favorite = favorite,
+        imagePath = imagePath
     )
 }
 
@@ -29,6 +31,7 @@ fun RecipeEntity.mapToModel(): Recipe {
         title = title,
         description = description,
         preparationTime = preparationTime,
-        favorite = favorite
+        favorite = favorite,
+        imagePath = imagePath
     )
 }

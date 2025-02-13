@@ -9,7 +9,7 @@ import com.jdsm.myapplication.data.local.entity.RecipeEntity
     entities = [
         RecipeEntity::class
     ],
-    version = 2
+    version = 3
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun recipeDao(): RecipeDao

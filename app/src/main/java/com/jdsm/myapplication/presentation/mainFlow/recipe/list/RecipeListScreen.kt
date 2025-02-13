@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.jdsm.myapplication.R
 import com.jdsm.myapplication.data.model.Recipe
 import com.jdsm.myapplication.data.source.RecipeDb
@@ -185,8 +186,14 @@ private fun RecipeItem(
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Column {
+            val painter = if (recipe.imagePath.isNullOrEmpty()) {
+                painterResource(id = R.drawable.food_empty)
+            } else {
+                rememberAsyncImagePainter(model = recipe.imagePath)
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.food),
+                painter = painter,
                 contentDescription = stringResource(id = R.string.recipe_image_description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

@@ -6,4 +6,5 @@ sealed interface RecipeFormEvent {
     data class PreparationTimeChange(val preparationTime: String) : RecipeFormEvent
     data class FavoriteChange(val isFavorite: Boolean) : RecipeFormEvent
     data object AddRecipe : RecipeFormEvent
+    data class ImageSelected(val imagePath: String): RecipeFormEvent
 }
